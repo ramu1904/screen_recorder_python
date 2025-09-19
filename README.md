@@ -64,8 +64,10 @@ http://127.0.0.1:5000
 
 ## Demo
 
+- using UI 
 <img width="1919" height="970" alt="image" src="https://github.com/user-attachments/assets/10bbce71-100e-45e3-96b5-6c6d8087fd22" />
 
+-through cli
 <img width="915" height="672" alt="image" src="https://github.com/user-attachments/assets/3fdd6f23-60fd-443b-848d-6f51a76399d5" />
 
 ## 📹 Output
