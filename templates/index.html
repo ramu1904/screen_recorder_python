@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screen Recorder</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; padding:20px; }
+    .container { max-width:800px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    h1 { text-align:center; }
+    .controls { display:flex; justify-content:space-between; margin:20px 0; }
+    button { padding:10px 20px; font-size:16px; border:none; border-radius:6px; cursor:pointer; }
+    .start { background:#28a745; color:#fff; }
+    .stop { background:#dc3545; color:#fff; }
+    .modes { margin-bottom:15px; }
+    .status, .files { margin-top:20px; }
+    .log { background:#111; color:#0f0; padding:10px; font-family:monospace; height:100px; overflow:auto; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Screen Recorder</h1>
+
+    <div class="modes">
+      <label><input type="radio" name="mode" value="full" checked> Full Screen</label>
+      <label><input type="radio" name="mode" value="crop"> Crop Region</label>
+    </div>
+
+    <div class="controls">
+      <button class="start" onclick="startRecording()">Start</button>
+      <button class="stop" onclick="stopRecording()">Stop</button>
+    </div>
+
+    <div class="status">
+      <h3>Status</h3>
+      <p id="recState">Recording: NO</p>
+      <p id="frames">Frames: 0</p>
+      <p id="elapsed">Elapsed: 0s</p>
+    </div>
+
+    <div class="files">
+      <h3>Recordings</h3>
+      <ul id="recordings"></ul>
+    </div>
+
+    <div class="logs">
+      <h3>Logs</h3>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+<script>
+async function startRecording() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  log("Starting...");
+  const res = await fetch("/start", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({mode})
+  });
+  const data = await res.json();
+  log(JSON.stringify(data));
+  updateRecordings();
+}
+
+async function stopRecording() {
+  log("Stopping...");
+  const res = await fetch("/stop", {method:"POST"});
+  const data = await res.json();
+  log(JSON.stringify(data));
+  setTimeout(updateRecordings, 2000);
+}
+
+async function fetchStatus() {
+  const res = await fetch("/status");
+  const data = await res.json();
+  document.getElementById("recState").innerText = "Recording: " + (data.recording ? "YES" : "NO");
+  document.getElementById("frames").innerText = "Frames: " + data.frames;
+  document.getElementById("elapsed").innerText = "Elapsed: " + data.elapsed_seconds + "s";
+}
+
+async function updateRecordings() {
+  const res = await fetch("/recordings");
+  const files = await res.json();
+  const list = document.getElementById("recordings");
+  list.innerHTML = "";
+  files.forEach(f => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "/download/" + f;
+    a.innerText = f;
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+}
+
+function log(msg) {
+  const logBox = document.getElementById("log");
+  logBox.innerHTML = "[" + new Date().toLocaleTimeString() + "] " + msg + "<br>" + logBox.innerHTML;
+}
+
+setInterval(fetchStatus, 1000);
+updateRecordings();
+</script>
+</body>
+</html>
