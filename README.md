@@ -34,8 +34,8 @@ pywin32
 
 Clone the repository:
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/ramu1904/screen_recorder_python.git
+cd screen_recorder_python
 ```
 
 (Optional but recommended) Create and activate a virtual environment:
@@ -75,7 +75,9 @@ project/
 ## 📹 Output
 
 Recordings are saved as .mp4 files with random unique names 
-for example : recording_a1b2c3d4.mp4
+
+for example :
+recording_a1b2c3d4.mp4
 
 ## 🤝 Contributing
 
