@@ -60,17 +60,13 @@ http://127.0.0.1:5000
 
 ## 📂 Project Structure
 
-project/
-│── app.py
-│── templates/
-│    └── index.html
-│── static/
-│    ├── style.css
-│    └── script.js
-│── recordings/      # Folder where recorded videos are saved
-│── requirements.txt
-│── README.md
-│── .gitignore
+<img width="453" height="284" alt="image" src="https://github.com/user-attachments/assets/1a2c9f59-0a3a-4d56-8463-55f333e01205" />
+
+## Demo
+
+<img width="1919" height="970" alt="image" src="https://github.com/user-attachments/assets/10bbce71-100e-45e3-96b5-6c6d8087fd22" />
+
+<img width="915" height="672" alt="image" src="https://github.com/user-attachments/assets/3fdd6f23-60fd-443b-848d-6f51a76399d5" />
 
 ## 📹 Output
 
